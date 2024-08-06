@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lip Sync Application</title>
+    <script>
+        function showResult(videoUrl) {
+            document.getElementById('result').innerHTML = `
+                <h2>Result Video</h2>
+                <video controls>
+                    <source src="${videoUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        function handleWebhook(data) {
+            if (data.status === 'received' && data.videoUrl) {
+                showResult(data.videoUrl);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Lip Sync Application</h1>
+
+    <h2>Process Lip Sync</h2>
+    <form action="/process" method="post">
+        <input type="submit" value="Process Lip Sync">
+    </form>
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+
+    {% if error %}
+    <p>Error: {{ error }}</p>
+    {% endif %}
+
+    <div id="result"></div>
+</body>
+</html>
